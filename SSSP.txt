@@ -356,7 +356,7 @@ void buildFromGrid(const vector<vector<int>>& grid)
                 if (ni >= 0 && ni < rows && nj >= 0 && nj < cols)
                 {
                     int v = id(ni, nj);
-                    int w = 1; // weight (change if needed)
+                    int w = 1; 
 
                     adj[u].push_back({v, w});
                 }
@@ -422,6 +422,7 @@ long long dijkstra_two_coupons(int src)
 
     return min({dist[0][V], dist[1][V], dist[2][V]});
 }
+
 
 
 
