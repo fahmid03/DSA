@@ -375,3 +375,53 @@ void buildFromGrid(const vector<vector<int>>& grid)
 if (grid[i][j] == -1) continue;
 int w = grid[ni][nj];
 
+
+long long dijkstra_two_coupons(int src)
+{
+    const int MAXC = 2;
+    vector<vector<long long>> dist(MAXC+1, vector<long long>(V+1, LLONG_MAX));
+
+    priority_queue<
+        vector<long long>,
+        vector<vector<long long>>,
+        greater<vector<long long>>
+    > pq;
+
+    dist[0][src] = 0;
+    pq.push({0, src, 0});
+
+    while (!pq.empty())
+    {
+        auto top = pq.top(); pq.pop();
+        long long d = top[0];
+        int u = top[1];
+        int c = top[2];
+
+        if (d != dist[c][u]) continue;
+
+        for (auto edge : adj[u])
+        {
+            int v = edge.first;
+            int w = edge.second;
+
+            // No coupon
+            if (d + w < dist[c][v])
+            {
+                dist[c][v] = d + w;
+                pq.push({dist[c][v], v, c});
+            }
+
+            // Use coupon
+            if (c < MAXC && d + w/2 < dist[c+1][v])
+            {
+                dist[c+1][v] = d + w/2;
+                pq.push({dist[c+1][v], v, c+1});
+            }
+        }
+    }
+
+    return min({dist[0][V], dist[1][V], dist[2][V]});
+}
+
+
+
