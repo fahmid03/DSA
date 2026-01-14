@@ -1,0 +1,170 @@
+1️⃣ Mandatory Checkpoint With Limited Uses
+
+A transportation network is represented as a weighted directed graph.
+Each city is a node and each road is a directed edge with cost c.
+
+There is a special inspection city X.
+A vehicle may pass through city X at most once. Passing through X gives a discount of 2 units on every edge AFTER X, but edges before X remain unchanged.
+
+Task
+
+For each query (a, b), determine the minimum cost to travel from city a to city b.
+
+Input
+
+n, m — number of cities and roads
+
+m directed edges (u, v, c)
+
+city X
+
+number of queries q
+
+q queries (a, b)
+
+2️⃣ Dual Discount Zones
+
+The delivery network is a weighted directed graph.
+
+There are two discount cities A and B:
+
+If a path passes through A, all edges on the path get cost -1
+
+If a path passes through B, all edges on the path get cost -2
+
+If a path passes through both, only the larger discount applies
+
+Task
+
+For each query (i, j), compute the shortest possible route cost.
+
+3️⃣ Required OR Forbidden Node
+
+A city network is represented as a directed weighted graph.
+
+There is a city K:
+
+Some queries require the path to pass through K
+
+Some queries forbid passing through K
+
+Each query specifies its type.
+
+Task
+
+For each query (a, b, type):
+
+If type = 1, path must include K
+
+If type = 0, path must avoid K
+
+Find the shortest valid path cost.
+
+4️⃣ One-Time Toll Waiver
+
+A delivery route is represented as a weighted directed graph.
+
+Each vehicle is allowed to select one road on its journey whose cost becomes 0.
+This waiver may only be used after passing through city V.
+
+Task
+
+For each query (a, b), find the shortest cost route.
+
+5️⃣ Forced Hub Routing
+
+A logistics company requires every delivery to pass through exactly one hub city from a given set {H1, H2, ..., Hk}.
+
+Constraints
+
+Passing through more than one hub is not allowed
+
+Passing through none is invalid
+
+Task
+
+For each (a, b), compute the shortest valid route.
+
+6️⃣ Time Window Penalty
+
+Each road has a base cost c.
+
+There is a city T:
+
+If the path reaches T in ≤ D edges, no penalty
+
+Otherwise, every edge after T gets +5 cost
+
+Task
+
+For each query (a, b), determine the shortest route.
+
+7️⃣ Priority Lane Graph
+
+The graph contains priority roads and normal roads.
+
+There is a city P:
+
+If a path passes through P, all priority roads have cost 0
+
+Otherwise, priority roads have their original cost
+
+Task
+
+Find the shortest path between queried city pairs.
+
+8️⃣ Exactly-One-Special Constraint
+
+There are two special cities Y and Z.
+
+Each valid path must:
+
+Pass through exactly one of {Y, Z}
+
+Passing through both is invalid
+
+Task
+
+For each (a, b), compute the minimum valid path cost.
+
+9️⃣ Budget-Limited Checkpoint
+
+The graph is weighted and directed.
+
+There is a city C:
+
+If total cost before reaching C ≤ B, then all edges after C have half cost
+
+Otherwise, no discount applies
+
+Task
+
+For each query (a, b), find the shortest path.
+
+🔟 Mandatory Order Constraint
+
+There are two special cities A and B.
+
+A valid route:
+
+Must pass through A before B
+
+Passing through B before A invalidates the route
+
+Task
+
+For each query (u, v), determine the shortest valid route.
+
+If you want, next I can:
+
+Rank these by difficulty
+
+Convert one into a multi-state DP / Floyd modeling
+
+Or generate contest-style hidden edge-case versions
+
+Just tell me which direction you want.
+
+the first one is the same as the one before but i just use the first matrix for d1 calculation. the second one is just three matrices. for the third one we do apsp on two graphs, one without K. and then take the minimum of the one without K and u-k+k-v on the original graph. first tell me if these three are correct
+
+the fifth one we can run apsp on a version of each graph where we remove every but one hub. then take u-H+H-v. the 7th we make all priority roads zero on a different graph and run apsp twice. the 8th is an easy version of the 5th. the 9th we can do apsp twice. one on the discounted and one on original and we check if uC on the original is less than B, if so we add uC +discounted Cv otherwise we add origianl C-v. the 10th we do uA+AB+Bv and we make sure we cross A before B. after verifying these, tell me the strategies on the two i skipped.
