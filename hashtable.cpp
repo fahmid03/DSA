@@ -326,6 +326,75 @@ string generateword(int len) {
     return word;
 }
 
+void printProbeSequence(const K& key) {
+    if (hashtype == CHAIN) {
+        cout<<"Not supported in chaining method\n";
+        return;
+    }
+    bool first = true;
+    for (int i = 0; i < size; i++) {
+        int idx = probe(key, i);
+        if (!first) cout << " -> ";
+        cout << idx;
+        first = false;
+        if (!opentable[idx].has_value()) break;
+        if (opentable[idx]->key == key) break;
+    }
+    cout << "\n";
+}
+
+vector<K> getkeys() {
+    vector<K> keys;
+    if (hashtype == CHAIN)
+        for (auto& group : table)
+            for (auto& entry : group)
+                keys.push_back(entry.key);
+    else
+        for (auto& entry : opentable)
+            if (entry.has_value())
+                keys.push_back(entry->key);
+    return keys;
+}
+
+void printkeys(string label, HashTable<int,int>& ht) {
+    auto keys = ht.getkeys();
+    sort(keys.begin(), keys.end());
+    cout << label;
+    for (int k : keys) cout << k << " ";
+    cout << "\n";
+}
+
+// int main() {
+//     int na, nb;
+//     cin >> na;
+//     vector<int> a(na);
+//     for (int i = 0; i < na; i++) cin >> a[i];
+//     cin >> nb;
+//     vector<int> b(nb);
+//     for (int i = 0; i < nb; i++) cin >> b[i];
+
+//     HashTable<int,int> bht(CHAIN, 1);
+//     for (int x : b) bht.insert(x, 1);
+
+//     HashTable<int,int> unionht(CHAIN, 1);
+//     for (int x : a) unionht.insert(x, 1);
+//     for (int x : b) unionht.insert(x, 1);
+
+//     HashTable<int,int> interht(CHAIN, 1);
+//     for (int x : a)
+//         if (bht.search(x)) interht.insert(x, 1);
+
+//     HashTable<int,int> diffht(CHAIN, 1);
+//     for (int x : a) diffht.insert(x, 1);
+//     for (int x : b) diffht.remove(x);
+
+//     printkeys("Intersection: ", interht);
+//     printkeys("Union: ", unionht);
+//     printkeys("Diff (A-B): ", diffht);
+
+//     return 0;
+// }
+
 int main() {
     srand(time(0));
     int totalwords=10000;
